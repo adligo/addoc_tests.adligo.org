@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:fabricate_project xmlns:tns="http://www.adligo.org/fabricate/xml/io/project" 
+    xmlns:lns="http://www.adligo.org/fabricate/xml/io/library" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+    <tns:stages>
+        <tns:stage name="jar" />
+    </tns:stages>
+    <lns:dependencies>
+        <lns:library>jacoco</lns:library>
+        <lns:library>mockito</lns:library>
+        <lns:library>gwt</lns:library>
+        
+        <lns:project>tests4j.adligo.org</lns:project>
+        <lns:project>tests4j_4jacoco.adligo.org</lns:project>
+        <lns:project>tests4j_4mockito.adligo.org</lns:project>
+        <lns:project>css.adligo.org</lns:project>
+        <lns:project>addoc.adligo.org</lns:project>
+    </lns:dependencies>
+ </tns:fabricate_project>
