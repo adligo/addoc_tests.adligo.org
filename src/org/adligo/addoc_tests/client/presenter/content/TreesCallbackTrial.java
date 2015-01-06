@@ -12,7 +12,7 @@ import org.adligo.tests4j.shared.asserts.reference.CircularDependencies;
 import org.adligo.tests4j.system.shared.trials.SourceFileScope;
 import org.adligo.tests4j.system.shared.trials.Test;
 import org.adligo.tests4j_4mockito.MockitoSourceFileTrial;
-import org.adligo.tests4j_4mockito.ReturnCount;
+import org.adligo.tests4j_4mockito.MethodRecorder;
 
 import java.util.Map;
 
@@ -59,7 +59,7 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
     TreesCallback cb = new TreesCallback(trees);
     I_ArticleTreeRequestor requestor = mock(I_ArticleTreeRequestor.class);
     cb.setRequestor(requestor);
-    ReturnCount<Void> rc = new ReturnCount<Void>();
+    MethodRecorder<Void> rc = new MethodRecorder<Void>();
     doAnswer(rc).when(requestor).onFailure(any(Throwable.class));
     
     IllegalStateException x = new IllegalStateException();
@@ -71,7 +71,7 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
   @SuppressWarnings({"boxing", "unchecked"})
   @Test
   public void testOnSuccess() {
-    ReturnCount<Void> addTreesRc = new ReturnCount<Void>();
+    MethodRecorder<Void> addTreesRc = new MethodRecorder<Void>();
     
     Map<Integer, I_ArticleTree> trees = mock(Map.class);
     doAnswer(addTreesRc).when(trees).putAll(any());
@@ -80,7 +80,7 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
     cb.setIds(ids);
     
     I_ArticleTreeRequestor requestor = mock(I_ArticleTreeRequestor.class);
-    ReturnCount<Void> rc = new ReturnCount<Void>();
+    MethodRecorder<Void> rc = new MethodRecorder<Void>();
     doAnswer(rc).when(requestor).onSuccess(any());
     cb.setRequestor(requestor);
     
