@@ -12,7 +12,7 @@ import org.adligo.tests4j.shared.asserts.reference.CircularDependencies;
 import org.adligo.tests4j.system.shared.trials.SourceFileScope;
 import org.adligo.tests4j.system.shared.trials.Test;
 import org.adligo.tests4j_4mockito.MockitoSourceFileTrial;
-import org.adligo.tests4j_4mockito.MethodRecorder;
+import org.adligo.tests4j_4mockito.MockMethod;
 
 import java.util.Map;
 
@@ -59,19 +59,19 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
     TreesCallback cb = new TreesCallback(trees);
     I_ArticleTreeRequestor requestor = mock(I_ArticleTreeRequestor.class);
     cb.setRequestor(requestor);
-    MethodRecorder<Void> rc = new MethodRecorder<Void>();
+    MockMethod<Void> rc = new MockMethod<Void>();
     doAnswer(rc).when(requestor).onFailure(any(Throwable.class));
     
     IllegalStateException x = new IllegalStateException();
     cb.onFailure(x);
     assertEquals(1, rc.count());
-    assertSame(x, rc.getArguments(0)[0]);
+    assertSame(x, rc.getArgs(0)[0]);
   }
   
   @SuppressWarnings({"boxing", "unchecked"})
   @Test
   public void testOnSuccess() {
-    MethodRecorder<Void> addTreesRc = new MethodRecorder<Void>();
+    MockMethod<Void> addTreesRc = new MockMethod<Void>();
     
     Map<Integer, I_ArticleTree> trees = mock(Map.class);
     doAnswer(addTreesRc).when(trees).putAll(any());
@@ -80,7 +80,7 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
     cb.setIds(ids);
     
     I_ArticleTreeRequestor requestor = mock(I_ArticleTreeRequestor.class);
-    MethodRecorder<Void> rc = new MethodRecorder<Void>();
+    MockMethod<Void> rc = new MockMethod<Void>();
     doAnswer(rc).when(requestor).onSuccess(any());
     cb.setRequestor(requestor);
     
@@ -100,15 +100,15 @@ public class TreesCallbackTrial extends MockitoSourceFileTrial {
     
     cb.onSuccess();
     assertEquals(1, addTreesRc.count());
-    assertSame(articleTree, addTreesRc.getArguments(0)[0]);
+    assertSame(articleTree, addTreesRc.getArgs(0)[0]);
     assertEquals(0, rc.count());
     I_ArticleTree tree = mock(I_ArticleTree.class);
     when(articleTree.get(1)).thenReturn(tree);
     
     cb.onSuccess();
     assertEquals(2, addTreesRc.count());
-    assertSame(articleTree, addTreesRc.getArguments(1)[0]);
+    assertSame(articleTree, addTreesRc.getArgs(1)[0]);
     assertEquals(1, rc.count());
-    assertSame(tree, rc.getArguments(0)[0]);
+    assertSame(tree, rc.getArgs(0)[0]);
   }
 }
